@@ -16,7 +16,7 @@
         "symfony/symfony": "2.1.*"
     },
     "autoload": {
-        "psr-0": { "NicParry\\CurlBundle": "" }
+        "psr-0": { "NicParry\\Bundle\\CurlBundle": "" }
     },
     "target-dir": "NicParry/Bundle/CurlBundle"
 }
