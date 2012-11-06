@@ -21,5 +21,9 @@
             <argument>%nicparrycurlbundle.options%</argument>
             <argument>%nicparrycurlbundle.headers%</argument>
         </service>
+        <service id="nicparrycurlbundle.listener" class="NicParry\Bundle\CurlBundle\Listener\ResponseListener">
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+            <argument type="service" id="curl_wrapper" />
+        </service>
     </services>
 </container>

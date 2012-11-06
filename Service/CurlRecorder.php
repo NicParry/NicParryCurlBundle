@@ -17,7 +17,7 @@ class CurlRecorder
         $this->mocks = array();
     }
 
-    public function __destruct()
+    public function write()
     {
         foreach ($this->mocks as $track => $mocks) {
             if (!is_dir($this->dirName . '/' . $track)) {
@@ -28,9 +28,12 @@ class CurlRecorder
                     if (!is_dir($this->dirName . '/' . $track . '/' . $hash)) {
                         mkdir($this->dirName . '/' . $track . '/' . $hash);
                     }
-                    $file = fopen($this->dirName . '/' . $track . '/' . $hash . '/' . $key, 'a');
-                    fwrite($file, $value);
-                    fclose($file);
+                    if ($value) {
+                        $file = fopen($this->dirName . '/' . $track . '/' . $hash . '/' . $key, 'a');
+                        fwrite($file, $value);
+                        fclose($file);
+                        $this->mocks[$track][$hash][$key] = false;
+                    }
                 }
             }
         }

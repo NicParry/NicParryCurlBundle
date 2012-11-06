@@ -89,6 +89,11 @@ class CurlWrapper
      */
     private $mockTrack;
 
+    /**
+     * @var string
+     */
+    private $dirName;
+
 
     public function __construct($createMock = false, $useMock = false, $dirName = '', $userAgent = null, $cookieFile = false, $followRedirects = false, $referrer = false, $options = array(), $headers = array())
     {
@@ -106,12 +111,24 @@ class CurlWrapper
         $this->recorder = new CurlRecorder($dirName);
         $this->player = new CurlPlayer($dirName);
 
-        $this->mockTrack = 'default';
+        $this->dirName = $dirName;
+
+        $this->mockTrack = file_get_contents($dirName . '/current-track');
+    }
+
+    public function writeMocks()
+    {
+        $this->recorder->write();
+        $this->recorder = new CurlRecorder($this->dirName);
+        $this->player = new CurlPlayer($this->dirName);
     }
 
     public function setMockTrack($mockTrack)
     {
         $this->mockTrack = $mockTrack;
+        $file = fopen($this->dirName . '/current-track', 'w');
+        fwrite($file, $mockTrack);
+        fclose($file);
     }
 
     /**
