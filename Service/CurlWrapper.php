@@ -259,7 +259,8 @@ class CurlWrapper
             $response = new CurlResponse($rawResponse);
         } else {
             if ($newRequest) {
-                $this->error = curl_errno($this->request).' - '.curl_error($this->request);
+
+                throw new \Exception($this->error = curl_errno($this->request).' - '.curl_error($this->request));
             }
             $response = $rawResponse;
         }
